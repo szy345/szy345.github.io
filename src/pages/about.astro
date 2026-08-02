@@ -1,0 +1,75 @@
+---
+// 关于我
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from '../components/Reveal.astro';
+---
+<BaseLayout title="关于我 · DB>AI" description="17 年互联网大厂数据库工程师，提供技术支持与外包，协助 AI 开发运维">
+  <article class="container about">
+    <h1>你好，我是那个数据库工程师</h1>
+    <p class="lead">17 年互联网大厂数据库经验 · AI 转型实践者</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">17</div><div class="label">年数据库经验</div></div>
+      <div class="stat"><div class="num">千万级</div><div class="label">数据量系统服务经验</div></div>
+      <div class="stat"><div class="num">7×24</div><div class="label">生产环境保障</div></div>
+      <div class="stat"><div class="num">∞</div><div class="label">凌晨三点的陪伴</div></div>
+    </div>
+
+    <Reveal>
+      <p>
+        一个在互联网行业干了 <b>17 年</b>的数据库工程师。曾在大厂负责核心业务的数据库架构与运维，
+        服务过千万级数据量的系统，处理过数不清的生产故障。这些经验没有随失业消失——
+        它变成了判断力，也变成了可复用的资产。
+      </p>
+      <p>
+        2024 年年底，我失业了。不是能力问题，是时代变了——AI 的浪潮下，
+        大批同行被冲下岸。迷茫过、焦虑过，但后来想明白一件事：
+        <b>与其等 AI 替代我，不如先学会用它。</b>
+      </p>
+    </Reveal>
+
+    <Reveal>
+      <h2>我现在做的事</h2>
+      <ul>
+        <li><b>数据库技术支持 / 外包</b>——17 年大厂数据库实战经验：慢SQL优化、故障排查、数据迁移、架构设计、高可用方案。可以远程支持，也可以长期外包。</li>
+        <li><b>协助 AI 开发运维</b>——用 AI 做 SQL 优化、日志分析、自动化巡检、知识库搭建，帮你的团队把 AI 用起来，而不是看着 AI 干着急。</li>
+        <li><b>用 AI 从零搭了一个英语学习 App（EaseTalk）</b>——Android 客户端 + Python 后端 + AI 语音识别/评分，从想法到能用不到一个月，已开源。</li>
+      </ul>
+    </Reveal>
+
+    <Reveal>
+      <h2>为什么写这个博客</h2>
+      <p>
+        因为我在数据库行业待了 17 年，见过凌晨三点的生产环境，处理过几百个慢查询，
+        也踩过无数让人想骂娘的坑。现在 AI 来了，运维方式正在被重写。
+        我想把这些变化记录下来——哪些环节 AI 真的能顶上去，哪些环节还得靠人，
+        数据库工程师这个职业接下来会怎么走。
+      </p>
+      <p>这个博客里你会看到：</p>
+      <ul>
+        <li>🗄️ 数据库运维实战——慢SQL优化、故障排查、架构设计（多年大厂经验）</li>
+        <li>🤖 AI×数据库——AI 怎么改 SQL、怎么做巡检、怎么沉淀知识库（AI 开发运维）</li>
+        <li>🛠️ 技术服务——我提供什么样的支持与外包合作（技术支持/外包）</li>
+        <li>📝 一个数据库工程师的转型记录——真实的、不加滤镜的</li>
+      </ul>
+    </Reveal>
+
+    <Reveal>
+      <h2>如果你有这些问题，欢迎联系我</h2>
+      <ul>
+        <li>数据库越来越慢，不知道从哪下手</li>
+        <li>半夜总被告警吵醒，想睡个安稳觉</li>
+        <li>想用 AI 提升运维效率，但不知道怎么落地</li>
+        <li>团队缺一个懂数据库的人，想找个靠谱外包</li>
+      </ul>
+    </Reveal>
+
+    <Reveal>
+      <h2>联系方式</h2>
+      <div class="contact-box">
+        <span class="k">Email:</span> （待填写）<br />
+        <span class="k">服务:</span> 技术支持 / AI 运维协作 / 外包
+      </div>
+    </Reveal>
+  </article>
+</BaseLayout>

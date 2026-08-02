@@ -1,0 +1,143 @@
+---
+// 首页
+// 布局：终端主窗口 → 最新文章 → 能力卡片（底部横排三列）
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TerminalHero from '../components/TerminalHero.astro';
+import Reveal from '../components/Reveal.astro';
+import Calligraphy from '../components/Calligraphy.astro';
+import { getCategory } from '../data/categories';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts'))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 4);
+---
+<BaseLayout title="DB>AI · 数据库运维与 AI 实践" description="17 年互联网大厂数据库经验 · 协助 AI 开发运维 · 提供技术支持与外包">
+  <section class="hero">
+    <Calligraphy />
+    <p class="eyebrow">Database × AI</p>
+    <h1>AI 时代的数据库运维</h1>
+    <p class="sub">
+      17 年互联网大厂数据库经验 ·
+      <b>协助 AI 开发与运维</b> ·
+      提供 <b>技术支持 / 外包</b>
+    </p>
+
+    <!-- 终端主窗口，居中放大，重点突出 -->
+    <TerminalHero />
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">最新文章</h2>
+      {
+        posts.map((p, i) => {
+          const cat = getCategory(p.data.category);
+          return (
+            <Reveal delay={i * 60}>
+              <div class="post-card" data-href={`/blog/${p.id}/`}>
+                <div class="meta">
+                  {cat && <a class="cat-badge" href={`/blog#${cat.key}`}>{cat.icon} {cat.name}</a>}
+                  {p.data.pubDate.toISOString().slice(0, 10)}
+                </div>
+                <h2><a class="post-title" href={`/blog/${p.id}/`}>{p.data.title}</a></h2>
+                <p>{p.data.description}</p>
+                <div class="tags">
+                  {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+              </div>
+            </Reveal>
+          );
+        })
+      }
+      <!-- 点击整张卡片打开文章（徽章/标题链接除外） -->
+      <script is:inline>
+        document.addEventListener('astro:page-load', () => {
+          document.querySelectorAll('.post-card[data-href]').forEach((card) => {
+            if (card.dataset.bound) return;
+            card.dataset.bound = '1';
+            card.addEventListener('click', (e) => {
+              if (e.target.closest('a')) return;
+              const href = card.dataset.href;
+              if (href) location.href = href;
+            });
+          });
+        });
+      </script>
+      <Reveal delay="100">
+        <p style="text-align:center; margin-top:24px;">
+          <a href="/blog">查看全部文章 →</a>
+        </p>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 底部：能力卡片，从左到右横排 -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">我能帮你什么</h2>
+      <div class="svc-row">
+        <Reveal>
+          <div class="svc-card">
+            <span class="svc-icon">🗄️</span>
+            <div>
+              <div class="tagline">DB OPS · 大厂经验</div>
+              <h3>数据库运维与性能优化</h3>
+              <p>千万级数据量系统经验：慢SQL优化、故障排查、数据迁移、高可用架构设计。</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay="80">
+          <div class="svc-card">
+            <span class="svc-icon">🤖</span>
+            <div>
+              <div class="tagline">AI × DB</div>
+              <h3>协助 AI 开发与运维</h3>
+              <p>AI 巡检、慢SQL改写、日志根因分析、知识库搭建，帮团队把 AI 用起来。</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay="160">
+          <div class="svc-card">
+            <span class="svc-icon">🔧</span>
+            <div>
+              <div class="tagline">SERVICE</div>
+              <h3>技术支持 / 外包</h3>
+              <p>远程支持、应急响应、长期外包，先给价值，再谈合作。</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay="240">
+          <div class="svc-card">
+            <span class="svc-icon">🎓</span>
+            <div>
+              <div class="tagline">SQL TRAINING</div>
+              <h3>企业级 SQL 培训</h3>
+              <p>面向开发/运维团队的 SQL 规范、性能优化、故障排查实战培训，大厂方法论成体系输出。</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay="320">
+          <div class="svc-card">
+            <span class="svc-icon">📱</span>
+            <div>
+              <div class="tagline">APP DEV</div>
+              <h3>个人 APP / 小程序开发</h3>
+              <p>用 AI 从零做过 EaseTalk：Android App、小程序、轻量应用，一人全栈搞定。</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay="400">
+          <div class="svc-card">
+            <span class="svc-icon">📚</span>
+            <div>
+              <div class="tagline">AI KNOWLEDGE</div>
+              <h3>AI 知识库 / 专属助手</h3>
+              <p>把踩坑记录、文档、经验喂给 AI，搭建团队可检索的知识库与专属问答助手。</p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

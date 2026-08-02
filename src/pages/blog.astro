@@ -1,0 +1,58 @@
+---
+// 文章列表页：按四大栏目分组展示
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from '../components/Reveal.astro';
+import { categories } from '../data/categories';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+---
+<BaseLayout title="全部文章 · DB>AI" description="AI 时代数据库运维的全部文章">
+  <section class="container" style="padding-top: 48px;">
+    <h1 style="font-size: 28px; background: linear-gradient(90deg, var(--cyan), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent;">
+      全部文章
+    </h1>
+
+    {
+      categories.map((cat) => {
+        const group = posts.filter((p) => p.data.category === cat.key);
+        if (group.length === 0) return null;
+        return (
+          <div style="margin-top: 36px;" id={cat.key}>
+            <h2 style="font-size: 20px; color: var(--cyan); margin-bottom: 4px;">
+              {cat.icon} {cat.name}
+            </h2>
+            <p style="color: var(--text-dim); font-size: 13px; margin: 0 0 18px;">{cat.desc}</p>
+            {
+              group.map((p, i) => (
+                <Reveal delay={i * 40}>
+                  <a class="post-card" href={`/blog/${p.id}/`}>
+                    <div class="meta">{p.data.pubDate.toISOString().slice(0, 10)}</div>
+                    <h2>{p.data.title}</h2>
+                    <p>{p.data.description}</p>
+                    <div class="tags">
+                      {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                    </div>
+                  </a>
+                </Reveal>
+              ))
+            }
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <!-- 从首页/详情页点分类徽章跳过来时，滚动定位到对应栏目 -->
+  <script is:inline>
+    document.addEventListener('astro:page-load', () => {
+      const hash = location.hash;
+      if (hash) {
+        const el = document.getElementById(hash.slice(1));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+</BaseLayout>

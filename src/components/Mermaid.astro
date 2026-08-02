@@ -1,0 +1,65 @@
+---
+// 动态流程图组件
+// 扫描文章中的 ```mermaid 代码块，渲染为带动画效果的流程图（暗色科技风）
+// 用法：在文章布局中引入一次 <Mermaid />，markdown 里直接写 ```mermaid 即可
+---
+
+<script>
+  import mermaid from 'mermaid';
+
+  let inited = false;
+
+  async function initMermaid() {
+    if (inited) return;
+    inited = true;
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'loose',
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#0a0f1e',
+        primaryColor: '#0a0f1e',
+        primaryBorderColor: '#22d3ee',
+        primaryTextColor: '#dbe4f0',
+        secondaryColor: '#0b1a20',
+        secondaryBorderColor: '#34d399',
+        secondaryTextColor: '#dbe4f0',
+        tertiaryColor: '#0a0f1e',
+        tertiaryBorderColor: '#38bdf8',
+        tertiaryTextColor: '#dbe4f0',
+        lineColor: '#22d3ee',
+        textColor: '#dbe4f0',
+        edgeLabelBackground: '#0a0f1e',
+        clusterBkg: '#0d1426',
+        clusterBorder: '#22d3ee',
+      },
+      flowchart: { curve: 'basis', padding: 18 },
+    });
+  }
+
+  async function renderMermaid() {
+    await initMermaid();
+    // 找到 markdown 渲染出的 mermaid 代码块（Shiki 会输出 data-language 属性）
+    const blocks = document.querySelectorAll('pre[data-language="mermaid"]');
+    for (const pre of Array.from(blocks)) {
+      if (!pre || pre.dataset.rendered) continue;
+      pre.dataset.rendered = '1';
+      const code = (pre.textContent || '').trim();
+      try {
+        // 随机 id 避免多图冲突
+        const uid = 'mmd-' + Math.random().toString(36).slice(2, 10);
+        const { svg } = await mermaid.render(uid, code);
+        const box = document.createElement('div');
+        box.className = 'mermaid-box';
+        box.innerHTML = svg;
+        pre.replaceWith(box);
+      } catch (err) {
+        // 语法错误时保留原文并提示，方便改错
+        pre.textContent = '【Mermaid 渲染失败】请检查语法\n' + code;
+      }
+    }
+  }
+
+  renderMermaid();
+</script>

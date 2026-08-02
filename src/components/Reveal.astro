@@ -1,0 +1,37 @@
+---
+// 滚动浮现组件
+// 元素进入视口时淡入上移，形成页面动效
+const { delay = 0 } = Astro.props;
+---
+<div class="reveal" data-reveal style={`transition-delay: ${delay}ms`}>
+  <slot />
+</div>
+
+<script is:inline>
+  // 全局单例观察器 + astro:page-load 事件，跨页面切换后仍能对新元素生效
+  (() => {
+    if (!window.__revealObs) {
+      window.__revealObs = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              window.__revealObs.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12 },
+      );
+    }
+    const obs = window.__revealObs;
+    const init = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    document.addEventListener('astro:page-load', init);
+  })();
+</script>

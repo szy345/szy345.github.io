@@ -1,0 +1,75 @@
+---
+// 首页左侧竖排毛笔字装饰，逐字浮现（墨点晕开效果）
+// 文案：莫道桑榆晚，为霞尚满天 —— 不嫌起步晚，晚霞照样满天
+// 布局：两列竖排，右列"莫道桑榆晚"，左列"为霞尚满天"（书法从右往左读）
+let n = 0;
+const lines = [
+  ['莫', '道', '桑', '榆', '晚', '，'],
+  ['为', '霞', '尚', '满', '天'],
+].map((line) => line.map((c) => ({ c, i: n++ })));
+---
+<div class="calligraphy" aria-hidden="true">
+  {
+    lines.map((line) => (
+      <div class="col">
+        {line.map(({ c, i }) => (
+          <span style={`--i: ${i}`}>{c}</span>
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .calligraphy {
+    position: fixed;
+    left: 4%;
+    top: 140px;
+    z-index: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.5em;
+    font-family: 'ShanXing', 'KaiTi', 'STKaiti', serif;
+    font-size: clamp(32px, 3.6vw, 54px);
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 0 26px rgba(255, 255, 255, 0.16);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .col {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.16em;
+  }
+
+  .col span {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.82) translateY(10px);
+    animation: writeIn 0.9s ease forwards;
+    animation-delay: calc(0.5s + var(--i) * 0.35s);
+  }
+
+  @keyframes writeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.82) translateY(10px);
+      filter: blur(6px);
+    }
+    60% {
+      filter: blur(1px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  /* 窄屏终端占满宽度，隐藏书法字避免遮挡 */
+  @media (max-width: 1100px) {
+    .calligraphy {
+      display: none;
+    }
+  }
+</style>

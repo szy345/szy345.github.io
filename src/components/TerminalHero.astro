@@ -1,0 +1,87 @@
+---
+// 终端打字机组件
+// 逐行模拟运维命令行输出，营造高科技氛围
+const lines = [
+  { prompt: 'dba@17yrs:~$', cmd: ' whoami', out: '大厂数据库老兵 · AI 时代践行者' },
+  { prompt: 'dba@17yrs:~$', cmd: ' ai-ops check --slowlog', out: '[OK] 已分析 47 条慢SQL，平均提速 12x' },
+  { prompt: 'dba@17yrs:~$', cmd: ' ai-ops patrol --report', out: '[OK] 巡检报告已生成，异常项 0，建议 3 条' },
+];
+const json = JSON.stringify(lines);
+---
+<div class="terminal">
+  <div class="terminal-bar">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="title">dba@17yrs — bash</span>
+  </div>
+  <div class="terminal-body" id="term-body"></div>
+</div>
+
+<script is:inline define:vars={{ termLines: lines }}>
+  (() => {
+    const cursorEl = () => {
+      const c = document.createElement('span');
+      c.className = 'cursor';
+      return c;
+    };
+
+    async function typeText(el, text) {
+      for (const ch of text) {
+        el.textContent += ch;
+        await new Promise((r) => setTimeout(r, 28));
+      }
+    }
+
+    async function play() {
+      const body = document.getElementById('term-body');
+      // 已打印过就不再重复播放
+      if (!body || body.textContent.length > 0) return;
+      body.innerHTML = '';
+      for (const line of termLines) {
+        const row = document.createElement('div');
+        body.appendChild(row);
+        const cursor = cursorEl();
+        if (line.prompt) {
+          const p = document.createElement('span');
+          p.className = 'prompt';
+          p.textContent = line.prompt;
+          row.appendChild(p);
+          const c = document.createElement('span');
+          c.className = 'cmd';
+          row.appendChild(c);
+          row.appendChild(cursor);
+          await typeText(c, line.cmd);
+          await new Promise((r) => setTimeout(r, 250));
+        }
+        cursor.remove();
+        if (line.out) {
+          const o = document.createElement('div');
+          o.className = 'out';
+          o.textContent = line.out;
+          body.appendChild(o);
+        }
+        await new Promise((r) => setTimeout(r, 180));
+      }
+      // 末尾留下光标，模拟仍在运行的终端
+      const last = document.createElement('span');
+      last.className = 'prompt';
+      last.textContent = 'dba@17yrs:~$';
+      body.appendChild(last);
+      body.appendChild(cursorEl());
+    }
+
+    const init = () => {
+      play();
+    };
+
+    // 首次加载兜底
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    // 客户端路由切换页面后触发（监听器注册在 document 上，跨页面永久有效）
+    document.addEventListener('astro:page-load', init);
+  })();
+</script>

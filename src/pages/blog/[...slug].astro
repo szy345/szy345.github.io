@@ -1,0 +1,44 @@
+---
+// 文章详情页
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Mermaid from '../../components/Mermaid.astro';
+import { getCategory } from '../../data/categories';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const cat = getCategory(post.data.category);
+---
+<BaseLayout title={`${post.data.title} · DB>AI`} description={post.data.description}>
+  <article class="container article">
+    <header>
+      <h1>{post.data.title}</h1>
+      <div class="meta">
+        {cat && <a class="cat-badge" href={`/blog#${cat.key}`}>{cat.icon} {cat.name}</a>}
+        <span> · </span>
+        {post.data.pubDate.toISOString().slice(0, 10)}
+        <span> · </span>
+        {post.data.tags.join(' / ')}
+      </div>
+    </header>
+
+    <!-- 引入一次即可，自动渲染文中的 mermaid 代码块 -->
+    <Mermaid />
+
+    <div class="article-body">
+      <Content />
+    </div>
+
+    <div style="padding-bottom: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
+      <a href="/blog">← 返回全部文章</a>
+    </div>
+  </article>
+</BaseLayout>

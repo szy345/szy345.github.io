@@ -1,0 +1,48 @@
+---
+// 基础布局：导航 + 页脚 + 全局暗色科技风样式
+import '../styles/global.css';
+import MusicPlayer from '../components/MusicPlayer.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'AI 时代数据库运维 · 大厂老兵的技术博客' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- 页面切换走客户端路由，避免整页刷新导致音乐中断 -->
+    <ClientRouter />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="site-nav-inner">
+        <a class="brand" href="/"><span class="accent">DB</span>&gt;AI</a>
+        <div class="nav-links">
+          <a href="/">首页</a>
+          <a href="/blog">文章</a>
+          <a href="/about">关于</a>
+        </div>
+      </div>
+    </nav>
+
+    <slot />
+
+    <MusicPlayer />
+
+    <footer class="site-footer">
+      <div>
+        用 <span class="mono">Astro</span> 构建 · 17 年数据库老兵 · AI 时代运维实践
+      </div>
+    </footer>
+  </body>
+</html>

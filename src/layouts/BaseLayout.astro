@@ -26,16 +26,17 @@ const { title, description = 'AI 时代数据库运维 · 大厂老兵的技术�
     <script is:inline src="https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
   </head>
   <body>
+    <!-- 访问统计：固定在屏幕最左上角，滚动不跟随，切页保持不重复计数 -->
+    <div class="visit-stats" transition:persist>
+      <span>今日访问: <b id="busuanzi_today_pv">--</b></span>
+      <span class="sep">·</span>
+      <span>总访问次数: <b id="busuanzi_site_pv">--</b></span>
+    </div>
+
     <nav class="site-nav">
       <div class="site-nav-inner">
         <div class="brand-left">
           <a class="brand" href="/"><span class="accent">DB</span>&gt;AI</a>
-          <!-- 访问统计：今日/总人次，切页保持不重复计数 -->
-          <div class="visit-stats" transition:persist>
-            <span>今日 <b id="busuanzi_today_pv">--</b></span>
-            <span class="sep">·</span>
-            <span>总 <b id="busuanzi_site_pv">--</b></span>
-          </div>
         </div>
         <div class="nav-links">
           <a href="/">首页</a>

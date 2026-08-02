@@ -95,7 +95,12 @@ a:hover {
   min-width: 0;
 }
 
+/* 访问统计：固定在屏幕最左上角，滚动不跟随 */
 .visit-stats {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -103,6 +108,12 @@ a:hover {
   font-size: 11px;
   color: var(--text-dim);
   white-space: nowrap;
+  padding: 10px 14px;
+  background: rgba(5, 7, 15, 0.92);
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom-right-radius: 10px;
+  backdrop-filter: blur(8px);
 }
 
 .visit-stats b {
@@ -686,4 +697,11 @@ section {
   .hero { padding: 48px 0 28px; }
   .nav-links { gap: 14px; font-size: 13px; }
   .visit-stats { display: none; }
+}
+
+/* 统计固定在左上角时，导航栏品牌给它让位 */
+@media (min-width: 641px) {
+  .site-nav-inner {
+    padding-left: 210px;
+  }
 }

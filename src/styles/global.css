@@ -88,6 +88,34 @@ a:hover {
   justify-content: space-between;
 }
 
+.brand-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.visit-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.visit-stats b {
+  color: var(--cyan);
+  font-weight: 600;
+  min-width: 2.2em;
+  text-align: right;
+}
+
+.visit-stats .sep {
+  color: var(--border);
+}
+
 .brand {
   font-family: var(--mono);
   font-weight: 700;
@@ -657,4 +685,5 @@ section {
 @media (max-width: 640px) {
   .hero { padding: 48px 0 28px; }
   .nav-links { gap: 14px; font-size: 13px; }
+  .visit-stats { display: none; }
 }

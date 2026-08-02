@@ -22,11 +22,21 @@ const { title, description = 'AI 时代数据库运维 · 大厂老兵的技术�
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <!-- 页面切换走客户端路由，避免整页刷新导致音乐中断 -->
     <ClientRouter />
+    <!-- 不蒜子访问统计（纯静态站无需后端） -->
+    <script is:inline src="https://cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
   </head>
   <body>
     <nav class="site-nav">
       <div class="site-nav-inner">
-        <a class="brand" href="/"><span class="accent">DB</span>&gt;AI</a>
+        <div class="brand-left">
+          <a class="brand" href="/"><span class="accent">DB</span>&gt;AI</a>
+          <!-- 访问统计：今日/总人次，切页保持不重复计数 -->
+          <div class="visit-stats" transition:persist>
+            <span>今日 <b id="busuanzi_today_pv">--</b></span>
+            <span class="sep">·</span>
+            <span>总 <b id="busuanzi_site_pv">--</b></span>
+          </div>
+        </div>
         <div class="nav-links">
           <a href="/">首页</a>
           <a href="/blog">文章</a>

@@ -620,6 +620,20 @@ section {
   color: var(--cyan);
 }
 
+.site-footer .site-icp {
+  margin-top: 8px;
+}
+
+.site-icp a {
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.site-icp a:hover {
+  color: var(--cyan);
+}
+
 /* ===== 关于页 ===== */
 .about h1 {
   font-size: clamp(28px, 5vw, 42px);

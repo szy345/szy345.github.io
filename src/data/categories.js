@@ -2,7 +2,7 @@
 export const categories = [
   { key: 'db-ops', icon: '🗄️', name: '数据库运维', desc: '多年大厂经验的实战沉淀：慢SQL、故障、架构' },
   { key: 'ai-db', icon: '🤖', name: 'AI×数据库', desc: 'AI 怎么改 SQL、做巡检、建知识库' },
-  { key: 'service', icon: '🛠️', name: '技术服务', desc: '技术支持 / 外包，能帮你解决什么问题' },
+  { key: 'service', icon: '🛠️', name: '技术服务', desc: '技术支持 / 技术兼职，能帮你解决什么问题' },
   { key: 'story', icon: '📝', name: '转型记录', desc: '一个数据库工程师的 AI 转型之路' },
 ];
 

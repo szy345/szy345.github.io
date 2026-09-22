@@ -271,6 +271,9 @@ section {
   .svc-row {
     grid-template-columns: 1fr;
   }
+  .ops-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ===== 终端组件（首页主窗口） ===== */
@@ -703,6 +706,180 @@ section {
 }
 
 .contact-box .k {
+  color: var(--text-dim);
+}
+
+/* ===== 数据运维页 ===== */
+.data-ops-intro h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  margin: 56px 0 8px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.data-ops-intro .lead {
+  color: var(--text-dim);
+  font-size: 16px;
+  max-width: 760px;
+}
+
+.data-ops-intro .lead b {
+  color: var(--text);
+}
+
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 32px 0 24px;
+}
+
+.ops-grid > .reveal {
+  height: 100%;
+}
+
+.ops-card {
+  height: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.ops-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 10px 28px rgba(34, 211, 238, 0.10);
+}
+
+.ops-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.ops-icon {
+  font-size: 30px;
+  flex-shrink: 0;
+}
+
+.ops-head h2 {
+  margin: 2px 0 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.ops-card > p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.ops-topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ops-topics li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.ops-topics li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--cyan);
+}
+
+/* 可点击的板块卡片（有下级页面时） */
+.ops-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ops-card-link:hover {
+  text-shadow: none;
+}
+
+.ops-more {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--cyan);
+}
+
+/* 标签行（技术栈等） */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+/* ===== 数据运维下级页（如 数据治理 执行流程） ===== */
+.crumbs {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin: 40px 0 0;
+}
+
+.ops-detail .lead b {
+  color: var(--text);
+}
+
+.ops-step {
+  display: flex;
+  gap: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.ops-step:hover {
+  transform: translateX(4px);
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.10);
+}
+
+.ops-step-no {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--cyan);
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+.ops-step h3 {
+  margin: 2px 0 4px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.ops-step .tagline {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+}
+
+.ops-step p {
+  margin: 6px 0 8px;
+  font-size: 14px;
   color: var(--text-dim);
 }
 

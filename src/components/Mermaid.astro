@@ -62,4 +62,6 @@
   }
 
   renderMermaid();
+  // 客户端路由切页后重新扫描渲染（避免整页刷新）
+  document.addEventListener('astro:page-load', renderMermaid);
 </script>

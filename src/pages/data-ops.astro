@@ -1,0 +1,46 @@
+---
+// 数据运维：存储 / 备份 / 归档 / 治理 / 安全 五大板块独立页面
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from '../components/Reveal.astro';
+import { dataOpsSections } from '../data/data-ops';
+import { dataOpsDetails } from '../data/data-ops-details';
+---
+<BaseLayout title="数据运维 · DB>AI" description="数据存储 · 数据备份 · 数据归档 · 数据治理 · 数据安全">
+  <section class="container">
+    <header class="data-ops-intro">
+      <h1>数据运维</h1>
+      <p class="lead">
+        数据库运维之外，数据本身也需要一套运维体系。按
+        <b>存储、备份、归档、治理、安全</b>
+        五个板块，梳理我 17 年生产环境里可落地的方法与踩过的坑。
+      </p>
+    </header>
+
+    <div class="ops-grid">
+      {
+        dataOpsSections.map((s, i) => {
+          const href = dataOpsDetails[s.key] ? `/data-ops/${s.key}` : undefined;
+          const Tag = href ? 'a' : 'article';
+          return (
+            <Reveal delay={i * 60}>
+              <Tag class:list={['ops-card', href && 'ops-card-link']} href={href} id={s.key}>
+                <div class="ops-head">
+                  <span class="ops-icon">{s.icon}</span>
+                  <div>
+                    <div class="tagline">{s.tagline}</div>
+                    <h2>{s.name}</h2>
+                  </div>
+                </div>
+                <p>{s.desc}</p>
+                <ul class="ops-topics">
+                  {s.topics.map((t) => <li>{t}</li>)}
+                </ul>
+                {href && <div class="ops-more">查看执行流程 →</div>}
+              </Tag>
+            </Reveal>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+// 数据运维下级页：存储 / 备份 / 归档 / 治理 / 安全
+// 统一渲染「执行流程图 + 分步说明 + 落地要点」
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Mermaid from '../../components/Mermaid.astro';
+import Reveal from '../../components/Reveal.astro';
+import { dataOpsDetails } from '../../data/data-ops-details';
+
+export async function getStaticPaths() {
+  return Object.entries(dataOpsDetails).map(([slug, detail]) => ({
+    params: { slug },
+    props: { detail },
+  }));
+}
+
+const { detail } = Astro.props;
+---
+<BaseLayout
+  title={`${detail.title} · 数据运维 · DB>AI`}
+  description={`${detail.title}：${detail.lead}`}
+>
+  <article class="container about ops-detail">
+    <p class="crumbs"><a href="/data-ops">← 数据运维</a> / {detail.title}</p>
+    <h1>{detail.title}</h1>
+    <p class="lead">{detail.lead}</p>
+
+    <h2>执行流程</h2>
+    <p>{detail.flowIntro}</p>
+    <!-- 引入一次即可，自动把下面的 mermaid 代码块渲染成流程图 -->
+    <Mermaid />
+    <pre data-language="mermaid">{detail.flowchart}</pre>
+
+    <h2>分步怎么做</h2>
+    {
+      detail.steps.map((s, i) => (
+        <Reveal delay={i * 60}>
+          <div class="ops-step">
+            <div class="ops-step-no">{s.no}</div>
+            <div>
+              <div class="tagline">{s.en}</div>
+              <h3>{s.name}</h3>
+              <p>{s.desc}</p>
+              <ul class="ops-topics">
+                {s.points.map((p) => <li>{p}</li>)}
+              </ul>
+            </div>
+          </div>
+        </Reveal>
+      ))
+    }
+
+    <h2>落地要点</h2>
+    <ul>
+      {detail.keyPoints.map((k) => <li><b>{k.t}</b>——{k.d}</li>)}
+    </ul>
+
+    <div style="padding: 24px 0 40px;">
+      <a href="/data-ops">← 返回数据运维</a>
+    </div>
+  </article>
+</BaseLayout>

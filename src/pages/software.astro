@@ -1,0 +1,76 @@
+---
+// 软件开发：突出从想法到上线的开发流程
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Mermaid from '../components/Mermaid.astro';
+import Reveal from '../components/Reveal.astro';
+import { devSteps, aiRoles, techStack } from '../data/software';
+
+const flowchart = `flowchart TD
+  A["① 需求梳理<br/>要解决什么问题"] --> B["② 方案与选型<br/>技术栈 · 架构 · 数据库"]
+  B --> C["③ 原型与设计<br/>界面 · 交互 · 数据模型"]
+  C --> D["④ 编码开发<br/>AI 辅助 · 前后端"]
+  D --> E["⑤ 测试验证<br/>功能 · 性能 · 异常"]
+  E --> F{"通过?"}
+  F -->|否| D
+  F -->|是| G["⑥ 部署上线<br/>构建 · 发布 · 备份"]
+  G --> H["⑦ 监控与迭代<br/>日志 · 反馈 · 优化"]
+  H -->|新需求| A`;
+---
+<BaseLayout title="软件开发 · DB>AI" description="从想法到上线的完整开发流程：需求梳理、方案选型、原型设计、AI 辅助编码、测试、部署与迭代">
+  <article class="container about ops-detail">
+    <h1>软件开发</h1>
+    <p class="lead">
+      会写数据库，也能把想法变成能用的产品。这里不谈玄乎的架构，
+      只讲一条我自己在用的<b>开发流程</b>：从需求到上线，每一步都有 AI 帮得上忙的地方。
+    </p>
+
+    <h2>开发流程</h2>
+    <p>需求 → 方案 → 原型 → 开发 → 测试 → 部署 → 迭代，做完一轮再回到需求。</p>
+    <!-- 引入一次即可，自动把下面的 mermaid 代码块渲染成流程图 -->
+    <Mermaid />
+    <pre data-language="mermaid">{flowchart}</pre>
+
+    <h2>分步怎么做</h2>
+    {
+      devSteps.map((s, i) => (
+        <Reveal delay={i * 40}>
+          <div class="ops-step">
+            <div class="ops-step-no">{s.no}</div>
+            <div>
+              <div class="tagline">{s.en}</div>
+              <h3>{s.name}</h3>
+              <p>{s.desc}</p>
+              <ul class="ops-topics">
+                {s.points.map((p) => <li>{p}</li>)}
+              </ul>
+            </div>
+          </div>
+        </Reveal>
+      ))
+    }
+
+    <h2>AI 在每个环节能做什么</h2>
+    <p>AI 不是替我写完整产品，而是在每个环节把我从重复劳动里捞出来。</p>
+    <div class="svc-row">
+      {
+        aiRoles.map((r, i) => (
+          <Reveal delay={i * 60}>
+            <div class="svc-card">
+              <span class="svc-icon">{r.icon}</span>
+              <div>
+                <div class="tagline">{r.tagline}</div>
+                <h3>{r.title}</h3>
+                <p>{r.desc}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))
+      }
+    </div>
+
+    <h2>常用技术栈</h2>
+    <div class="tag-row">
+      {techStack.map((t) => <span class="tag">{t}</span>)}
+    </div>
+  </article>
+</BaseLayout>

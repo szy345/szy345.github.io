@@ -139,6 +139,16 @@ a:hover {
   color: var(--cyan);
 }
 
+/* 品牌旁的工作室名称 */
+.brand-left .brand-sub {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+  white-space: nowrap;
+}
+
 .nav-links {
   display: flex;
   gap: 22px;
@@ -273,6 +283,9 @@ section {
   }
   .ops-grid {
     grid-template-columns: 1fr;
+  }
+  .brand-left .brand-sub {
+    display: none;
   }
 }
 
@@ -621,6 +634,11 @@ section {
 .site-footer .mono {
   font-family: var(--mono);
   color: var(--cyan);
+}
+
+.site-footer .site-copyright {
+  color: var(--text);
+  margin-bottom: 6px;
 }
 
 .site-footer .site-icp {
